@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './DriverForm.css'; // 👈 We'll use a custom CSS file for styling
+import './DriverForm.css'; // Custom CSS for styling
 
 const DriverForm = () => {
   const [formData, setFormData] = useState({
@@ -21,11 +21,55 @@ const DriverForm = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form Submitted:', formData);
+  
+    const toBase64 = (file) => {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = (error) => reject(error);
+      });
+    };
+  
+    try {
+      const profileImageBase64 = await toBase64(formData.profileImage);
+      const licenseImageBase64 = await toBase64(formData.licenseImage);
+  
+      const payload = {
+        driverName: formData.driverName,
+        mobileNumber: formData.mobileNumber,
+        experience: formData.experience,
+        dateOfBirth: formData.dateOfBirth,
+        email: formData.email,
+        proofNumber: formData.proofNumber,
+        profileImage: profileImageBase64,
+        licenseImage: licenseImageBase64,
+      };
+  
+      const response = await fetch('http://localhost:8080/drivers/createDriver', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+  
+      if (response.ok) {
+        const result = await response.json();
+        console.log('Driver created successfully:', result);
+        alert('Driver registered successfully!');
+      } else {
+        console.error('API Error:', response.status);
+        alert('Failed to register driver.');
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      alert('Something went wrong.');
+    }
   };
-
+  
   return (
     <div className="form-background">
       <div className="form-container">
