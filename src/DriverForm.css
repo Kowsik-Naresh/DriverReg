@@ -5,7 +5,7 @@ body {
   }
   
   .form-background {
-    background: linear-gradient(135deg, #dbeafe, #f0f4ff); /* soft blue & lavender */
+   
     min-height: 100vh;
     display: flex;
     justify-content: center;
@@ -14,7 +14,7 @@ body {
   }
   
   .form-container {
-    background: rgba(255, 255, 255, 0.6);
+    background: linear-gradient(135deg, #dbeafe, #f0f4ff); /* soft blue & lavender */
     backdrop-filter: blur(20px);
     box-shadow: 0 8px 32px rgba(108, 122, 224, 0.2);
     border-radius: 20px;
@@ -86,8 +86,9 @@ body {
   
   .submit-row button {
     padding: 12px 40px;
-    font-size: 18px;
-    background: linear-gradient(135deg, #8e9efd, #b8c0ff);
+    font-size: 20px;
+    font-weight: 600;
+    background: linear-gradient(135deg, #202f86, #3448db);
     border: none;
     color: white;
     border-radius: 25px;
@@ -97,7 +98,8 @@ body {
   }
   
   .submit-row button:hover {
-    background: linear-gradient(135deg, #7c8cff, #9faaff);
+    background: linear-gradient(135deg, #a2c0dd, #a7aee7);
+    color: #333;
   }
   
 
