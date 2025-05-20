@@ -13,13 +13,32 @@ const DriverForm = () => {
     licenseImage: null,
   });
 
-  const handleChange = (e) => {
-    const { name, value, files } = e.target;
-    setFormData({
-      ...formData,
-      [name]: files ? files[0] : value,
-    });
-  };
+const handleChange = (e) => {
+  const { name, value, files } = e.target;
+
+  if (name === "dateOfBirth") {
+    const dob = new Date(value);
+    const today = new Date();
+    const age = today.getFullYear() - dob.getFullYear();
+    const monthDiff = today.getMonth() - dob.getMonth();
+    const dayDiff = today.getDate() - dob.getDate();
+
+    const is18OrOlder =
+      age > 18 ||
+      (age === 18 && (monthDiff > 0 || (monthDiff === 0 && dayDiff >= 0)));
+
+    if (!is18OrOlder) {
+      alert("You must be at least 18 years old.");
+      return;
+    }
+  }
+
+  setFormData({
+    ...formData,
+    [name]: files ? files[0] : value,
+  });
+};
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
